@@ -1,8 +1,9 @@
+package Parte_02;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class Dia1 {
     public static void main(String[] args) {
@@ -10,7 +11,7 @@ public class Dia1 {
         ArrayList<Integer> coluna1 = new ArrayList<>();
         ArrayList<Integer> coluna2 = new ArrayList<>();
 
-        try (BufferedReader br = new BufferedReader(new FileReader("Dia 01/Parte 01/input.txt"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader("Dia_01//input.txt"))) {
             String linha;
             while ((linha = br.readLine()) != null) {
                 String[] parts = linha.trim().split("\\s+");
@@ -23,12 +24,15 @@ public class Dia1 {
             throw new RuntimeException(e);
         }
 
-        Collections.sort(coluna1);
-        Collections.sort(coluna2);
-        
         int total = 0;
-        for (int i = 0; i < coluna1.size(); i++) {
-            total += Math.abs(coluna1.get(i) - coluna2.get(i));
+        for (Integer col1 : coluna1) {
+            int quantidade = 0;
+            for (Integer col2 : coluna2) {
+                if (col1.equals(col2)) {
+                    quantidade++;
+                }
+            }
+            total += col1 * quantidade;
         }
 
         System.out.println("Total: " + total);
