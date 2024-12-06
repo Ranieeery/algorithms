@@ -28,7 +28,7 @@ public class Day1 {
         Collections.sort(collumn1);
         Collections.sort(collumn2);
         
-        // Day 1
+        // Part 1
         int totalPart1 = 0;
         for (int i = 0; i < collumn1.size(); i++) {
             totalPart1 += Math.abs(collumn1.get(i) - collumn2.get(i));
@@ -36,7 +36,7 @@ public class Day1 {
 
         System.out.println("Total part 1: " + totalPart1);
 
-        // Day 2
+        // Part 2
         int totalPart2 = 0;
         for (Integer col1 : collumn1) {
             int amount = 0;

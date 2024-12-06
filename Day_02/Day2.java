@@ -3,45 +3,54 @@ package Day_02;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 
 public class Day2 {
     public static void main(String[] args) {
-        ArrayList<String> collumn = new ArrayList<>();
 
+        int safe = 0;
         try (BufferedReader br = new BufferedReader(new FileReader("Day_02//input.txt"))) {
             String line;
             while ((line = br.readLine()) != null) {
-                Collections.addAll(collumn, line.split(","));
+                String[] parts = line.trim().split("\\s+");
+                int[] numbers = new int[parts.length];
+
+                for (int i = 0; i < parts.length; i++) {
+                    numbers[i] = Integer.parseInt(parts[i]);
+                }
+
+                boolean control = true;
+                boolean increasing = true;
+                boolean decreasing = true;
+
+                for (int i = 1; i < numbers.length; i++) {
+                    int diff = numbers[i] - numbers[i - 1];
+
+                    if (Math.abs(diff) < 1 || Math.abs(diff) > 3) {
+                        control = false;
+                        break;
+                    }
+
+                    if (diff > 0) {
+                        decreasing = false;
+                    }
+
+                    if (diff < 0) {
+                        increasing = false;
+                    }
+
+                    if (!increasing && !decreasing) {
+                        control = false;
+                        break;
+                    }
+                }
+                if (control) {
+                    safe++;
+                }
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
-        int control = 0;
-        for (String s : collumn) {
-            String[] parts = s.split("\\s+");
-            int test = 0;
-            for (String part : parts) {
-                if (test == 0){
-                    test = Integer.parseInt(part);
-                    continue;
-                }
-                if (Integer.parseInt(part) >= test){
-                    break;
-                } else {
-                    test = Integer.parseInt(part);
-                    if (parts.length - 1 == Arrays.asList(parts).indexOf(part)){
-                        control++;
-                    }
-                }
-
-            }
-        }
-
-        System.out.println(control);
-
+        System.out.println(safe);
     }
 }
