@@ -47,11 +47,11 @@ public class Day2 {
         if (isSafe(numbers)) return true;
 
         for (int i = 0; i < numbers.length; i++) {
-            int index = 0;
+            int control = 0;
             int[] temp = new int[numbers.length - 1];
 
             for (int j = 0; j < numbers.length; j++) {
-                if (j != i) temp[index++] = numbers[j];
+                if (j != i) temp[control++] = numbers[j];
             }
 
             if (isSafe(temp)) return true;
