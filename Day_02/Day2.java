@@ -18,9 +18,7 @@ public class Day2 {
                     numbers[i] = Integer.parseInt(parts[i]);
                 }
 
-                if (isSafe(numbers)) {
-                    safe++;
-                }
+                if (isSafe(numbers)) safe++;
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -36,21 +34,13 @@ public class Day2 {
         for (int i = 1; i < numbers.length; i++) {
             int diff = numbers[i] - numbers[i - 1];
 
-            if (Math.abs(diff) < 1 || Math.abs(diff) > 3) {
-                return false;
-            }
+            if (Math.abs(diff) < 1 || Math.abs(diff) > 3) return false;
 
-            if (diff > 0) {
-                decreasing = false;
-            }
+            if (diff > 0) decreasing = false;
 
-            if (diff < 0) {
-                increasing = false;
-            }
+            if (diff < 0) increasing = false;
 
-            if (!increasing && !decreasing) {
-                return false;
-            }
+            if (!increasing && !decreasing) return false;
         }
         return true;
     }
