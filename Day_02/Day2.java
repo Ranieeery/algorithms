@@ -18,32 +18,7 @@ public class Day2 {
                     numbers[i] = Integer.parseInt(parts[i]);
                 }
 
-                boolean control = true;
-                boolean increasing = true;
-                boolean decreasing = true;
-
-                for (int i = 1; i < numbers.length; i++) {
-                    int diff = numbers[i] - numbers[i - 1];
-
-                    if (Math.abs(diff) < 1 || Math.abs(diff) > 3) {
-                        control = false;
-                        break;
-                    }
-
-                    if (diff > 0) {
-                        decreasing = false;
-                    }
-
-                    if (diff < 0) {
-                        increasing = false;
-                    }
-
-                    if (!increasing && !decreasing) {
-                        control = false;
-                        break;
-                    }
-                }
-                if (control) {
+                if (isSafe(numbers)) {
                     safe++;
                 }
             }
@@ -52,5 +27,31 @@ public class Day2 {
         }
 
         System.out.println(safe);
+    }
+
+    public static boolean isSafe(int[] numbers) {
+        boolean increasing = true;
+        boolean decreasing = true;
+
+        for (int i = 1; i < numbers.length; i++) {
+            int diff = numbers[i] - numbers[i - 1];
+
+            if (Math.abs(diff) < 1 || Math.abs(diff) > 3) {
+                return false;
+            }
+
+            if (diff > 0) {
+                decreasing = false;
+            }
+
+            if (diff < 0) {
+                increasing = false;
+            }
+
+            if (!increasing && !decreasing) {
+                return false;
+            }
+        }
+        return true;
     }
 }
