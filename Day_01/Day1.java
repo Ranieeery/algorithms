@@ -9,10 +9,9 @@ import java.util.List;
 
 public class Day1 {
     public static void main(String[] args) throws IOException {
-        ArrayList<Integer> collumn1 = new ArrayList<>();
-        ArrayList<Integer> collumn2 = new ArrayList<>();
-
         List<String> input = Files.readAllLines(Path.of("Day_01//input.txt"));
+        ArrayList<Integer> collumn1 = new ArrayList<>(), collumn2 = new ArrayList<>();
+
         input.forEach(line -> {
             String[] parts = line.trim().split("\\s+");
             collumn1.add(Integer.parseInt(parts[0]));
