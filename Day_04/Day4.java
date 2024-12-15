@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Day4 {
     public static void main(String[] args) throws IOException {
-        List<String> lines = Files.readAllLines(Path.of("Day_04/input_test2.txt"));
+        List<String> lines = Files.readAllLines(Path.of("Day_04/input.txt"));
         char[][] grid = new char[lines.size()][lines.getFirst().length()]; // remember me css grid
 
         for (int i = 0; i < lines.size(); i++) {
@@ -23,8 +23,8 @@ public class Day4 {
         int line = grid.length;
         int cols = grid[0].length;
 
-        int[] dline = { -1, -1, -1, 0, 0, 1, 1, 1 };
-        int[] dcol = { -1, 0, 1, -1, 1, -1, 0, 1 };
+        int[] dline = {-1, -1, -1, 0, 0, 1, 1, 1};
+        int[] dcol = {-1, 0, 1, -1, 1, -1, 0, 1};
 
         for (int i = 0; i < line; i++) {
             for (int j = 0; j < cols; j++) {
@@ -74,29 +74,26 @@ public class Day4 {
     }
 
     private static boolean isValidX(char[][] grid, int line, int col) {
-        return (checkMAS(grid, line, col, -1, -1) && checkMAS(grid, line, col, 1, 1)) ||
-                (checkMAS(grid, line, col, -1, 1) && checkMAS(grid, line, col, 1, -1));
+        boolean diag1 = checkPattern(grid, line - 1, col - 1, line, col, line + 1, col + 1);
+        boolean diag2 = checkPattern(grid, line - 1, col + 1, line, col, line + 1, col - 1);
+        return diag1 && diag2;
     }
 
-    private static boolean checkMAS(char[][] grid, int line, int col, int dline, int dcol) {
-        String[] patterns = { "MAS", "SAM" };
+    private static boolean checkPattern(char[][] grid, int line1, int col1, int line, int col, int line2, int col2) {
+        String[] patterns = {"MAS", "SAM"};
         int lines = grid.length;
         int cols = grid[0].length;
 
+        // Boundary check
+        if (line1 < 0 || line1 >= lines || col1 < 0 || col1 >= cols ||
+            line2 < 0 || line2 >= lines || col2 < 0 || col2 >= cols) {
+            return false;
+        }
+
         for (String pattern : patterns) {
-            int line1 = line + dline * -1;
-            int col1 = col + dcol * -1;
-            int line2 = line + dline;
-            int col2 = col + dcol;
-
-            if (line1 < 0 || line1 >= lines || col1 < 0 || col1 >= cols ||
-                    line2 < 0 || line2 >= lines || col2 < 0 || col2 >= cols) {
-                continue;
-            }
-
             if (grid[line1][col1] == pattern.charAt(0) &&
-                    grid[line][col] == pattern.charAt(1) &&
-                    grid[line2][col2] == pattern.charAt(2)) {
+                grid[line][col] == pattern.charAt(1) &&
+                grid[line2][col2] == pattern.charAt(2)) {
                 return true;
             }
         }
