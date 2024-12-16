@@ -8,7 +8,7 @@ import java.util.List;
 public class Day4 {
     public static void main(String[] args) throws IOException {
         List<String> lines = Files.readAllLines(Path.of("Day_04/input.txt"));
-        char[][] grid = new char[lines.size()][lines.getFirst().length()]; // remember me css grid
+        char[][] grid = new char[lines.size()][lines.getFirst().length()]; 
 
         for (int i = 0; i < lines.size(); i++) {
             grid[i] = lines.get(i).toCharArray();
@@ -84,7 +84,6 @@ public class Day4 {
         int lines = grid.length;
         int cols = grid[0].length;
 
-        // Boundary check
         if (line1 < 0 || line1 >= lines || col1 < 0 || col1 >= cols ||
             line2 < 0 || line2 >= lines || col2 < 0 || col2 >= cols) {
             return false;
