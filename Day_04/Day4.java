@@ -20,16 +20,16 @@ public class Day4 {
 
     private static int countXMAS(char[][] grid) {
         int count = 0;
-        int line = grid.length;
+        int rows = grid.length;
         int cols = grid[0].length;
 
-        int[] dline = {-1, -1, -1, 0, 0, 1, 1, 1};
+        int[] drow = {-1, -1, -1, 0, 0, 1, 1, 1};
         int[] dcol = {-1, 0, 1, -1, 1, -1, 0, 1};
 
-        for (int i = 0; i < line; i++) {
-            for (int j = 0; j < cols; j++) {
+        for (int r = 0; r < rows; r++) {
+            for (int c = 0; c < cols; c++) {
                 for (int dir = 0; dir < 8; dir++) {
-                    if (checkXMAS(grid, i, j, dline[dir], dcol[dir])) {
+                    if (checkXMAS(grid, r, c, drow[dir], dcol[dir])) {
                         count++;
                     }
                 }
@@ -38,20 +38,20 @@ public class Day4 {
         return count;
     }
 
-    private static boolean checkXMAS(char[][] grid, int line, int col, int dline, int dcol) {
+    private static boolean checkXMAS(char[][] grid, int row, int col, int drow, int dcol) {
         String target = "XMAS";
-        int lines = grid.length;
+        int rows = grid.length;
         int cols = grid[0].length;
 
         for (int i = 0; i < 4; i++) {
-            int newLine = line + i * dline;
+            int newRow = row + i * drow;
             int newCol = col + i * dcol;
 
-            if (newLine < 0 || newLine >= lines || newCol < 0 || newCol >= cols) {
+            if (newRow < 0 || newRow >= rows || newCol < 0 || newCol >= cols) {
                 return false;
             }
 
-            if (grid[newLine][newCol] != target.charAt(i)) {
+            if (grid[newRow][newCol] != target.charAt(i)) {
                 return false;
             }
         }
@@ -60,12 +60,12 @@ public class Day4 {
 
     private static int countXMAS2(char[][] grid) {
         int count = 0;
-        int lines = grid.length;
+        int rows = grid.length;
         int cols = grid[0].length;
 
-        for (int i = 1; i < lines - 1; i++) {
-            for (int j = 1; j < cols - 1; j++) {
-                if (grid[i][j] == 'A' && isValidX(grid, i, j)) {
+        for (int r = 1; r < rows - 1; r++) {
+            for (int c = 1; c < cols - 1; c++) {
+                if (grid[r][c] == 'A' && isValidX(grid, r, c)) {
                     count++;
                 }
             }
@@ -73,26 +73,26 @@ public class Day4 {
         return count;
     }
 
-    private static boolean isValidX(char[][] grid, int line, int col) {
-        boolean diag1 = checkPattern(grid, line - 1, col - 1, line, col, line + 1, col + 1);
-        boolean diag2 = checkPattern(grid, line - 1, col + 1, line, col, line + 1, col - 1);
+    private static boolean isValidX(char[][] grid, int row, int col) {
+        boolean diag1 = checkPattern(grid, row - 1, col - 1, row, col, row + 1, col + 1);
+        boolean diag2 = checkPattern(grid, row - 1, col + 1, row, col, row + 1, col - 1);
         return diag1 && diag2;
     }
 
-    private static boolean checkPattern(char[][] grid, int line1, int col1, int line, int col, int line2, int col2) {
+    private static boolean checkPattern(char[][] grid, int row1, int col1, int row, int col, int row2, int col2) {
         String[] patterns = {"MAS", "SAM"};
         int lines = grid.length;
         int cols = grid[0].length;
 
-        if (line1 < 0 || line1 >= lines || col1 < 0 || col1 >= cols ||
-            line2 < 0 || line2 >= lines || col2 < 0 || col2 >= cols) {
+        if (row1 < 0 || row1 >= lines || col1 < 0 || col1 >= cols ||
+            row2 < 0 || row2 >= lines || col2 < 0 || col2 >= cols) {
             return false;
         }
 
         for (String pattern : patterns) {
-            if (grid[line1][col1] == pattern.charAt(0) &&
-                grid[line][col] == pattern.charAt(1) &&
-                grid[line2][col2] == pattern.charAt(2)) {
+            if (grid[row1][col1] == pattern.charAt(0) &&
+                grid[row][col] == pattern.charAt(1) &&
+                grid[row2][col2] == pattern.charAt(2)) {
                 return true;
             }
         }
