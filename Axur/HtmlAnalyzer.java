@@ -45,12 +45,30 @@ public class HtmlAnalyzer {
         String[] htmlLines = content.split("\n");
 
         for (String line : htmlLines) {
-            System.out.println(line);
-            System.out.println("---");
 
-            
+            if (line.trim().isEmpty()) {
+                continue;
+            }
+
+            // opening tag
+            if (line.trim().startsWith("<") && line.trim().endsWith(">") && !line.startsWith("</")) {
+                String contentLine = line.substring(1, line.length() - 1).trim();
+                
+                String tag = contentLine.isEmpty() || contentLine.isBlank() || contentLine.contains("")? null : content;
+
+                if (tag == null) {
+                    isMalformed = true;
+                    break;
+                }
+            }
+
+            // closing tag
+            if (line.trim().startsWith("</") && line.trim().endsWith(">")) {
+                String contentLine = line.substring(1, line.length() - 1).trim();
+                
+                return contentLine.isEmpty() || contentLine.isBlank() || contentLine.contains("")? null : content;
+            }
         }
-
 
         return "";
     }
@@ -60,3 +78,4 @@ public class HtmlAnalyzer {
 // https://www.geeksforgeeks.org/command-line-arguments-in-java/
 // new URL deprecated in java 20, the test is in java 17
 // https://stackoverflow.com/questions/31462/how-to-fetch-html-in-java
+// i need a LIFO (Last In First Out) structure to store the tags, so i will use a stack, thanks grokking algorithms
