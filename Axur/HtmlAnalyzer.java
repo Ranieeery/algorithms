@@ -2,6 +2,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Scanner;
+import java.util.Stack;
 
 public class HtmlAnalyzer {
     public static void main(String[] args) {
@@ -40,8 +41,9 @@ public class HtmlAnalyzer {
     }
 
     public static String viewStructure(String content) {
-        String deepestLevel = null;
+        int deepestLevel = 0;
         boolean isMalformed = false;
+        Stack<String> tagStack = new Stack<>();
         String[] htmlLines = content.split("\n");
 
         for (String line : htmlLines) {
@@ -50,7 +52,6 @@ public class HtmlAnalyzer {
                 continue;
             }
 
-            // opening tag
             if (line.trim().startsWith("<") && line.trim().endsWith(">") && !line.startsWith("</")) {
                 String contentLine = line.substring(1, line.length() - 1).trim();
                 
@@ -60,13 +61,23 @@ public class HtmlAnalyzer {
                     isMalformed = true;
                     break;
                 }
-            }
 
-            // closing tag
-            if (line.trim().startsWith("</") && line.trim().endsWith(">")) {
+                tagStack.push(tag);
+            } else if (line.trim().startsWith("</") && line.trim().endsWith(">")) {
                 String contentLine = line.substring(1, line.length() - 1).trim();
-                
-                return contentLine.isEmpty() || contentLine.isBlank() || contentLine.contains("")? null : content;
+                String tag = contentLine.isEmpty() || contentLine.isBlank() || contentLine.contains("")? null : content;
+
+                if (tag == null || tagStack.isEmpty()) {
+                    isMalformed = true;
+                    break;
+                }
+                tagStack.pop();
+            } else {
+                int depth = tagStack.size();
+
+                if (depth > deepestLevel) {
+                    deepestLevel = depth;
+                }
             }
         }
 

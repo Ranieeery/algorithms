@@ -12,3 +12,9 @@ javac HtmlAnalyzer.java
 ```bash
 java HtmlAnalyzer <url>
 ```
+
+or
+
+```bash
+javac HtmlAnalyzer.java && java HtmlAnalyzer http://hiring.axreng.com/internship/example1.html
+```
