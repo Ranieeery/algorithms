@@ -18,3 +18,6 @@ or
 ```bash
 javac HtmlAnalyzer.java && java HtmlAnalyzer http://hiring.axreng.com/internship/example1.html
 ```
+
+WSL Ubuntu
+Learned that Stack uses generics

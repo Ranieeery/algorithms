@@ -17,6 +17,9 @@ public class HtmlAnalyzer {
         try {
             String content = connection(URL);
             String result = viewStructure(content);
+            if (result != null) {
+                System.out.println(result);
+            }
         } catch (Exception e) {
             e.getMessage();
         }
@@ -42,6 +45,7 @@ public class HtmlAnalyzer {
 
     public static String viewStructure(String content) {
         int deepestLevel = 0;
+        String text = null;
         boolean isMalformed = false;
         Stack<String> tagStack = new Stack<>();
         String[] htmlLines = content.split("\n");
@@ -77,11 +81,20 @@ public class HtmlAnalyzer {
 
                 if (depth > deepestLevel) {
                     deepestLevel = depth;
+                    text = line.trim();
                 }
             }
         }
 
-        return "";
+        if (!tagStack.isEmpty()) {
+            isMalformed = true;
+        }
+
+        if (isMalformed) {
+            return "malformed HTML";
+        } else {
+            return text;
+        }
     }
 }
 
@@ -90,3 +103,4 @@ public class HtmlAnalyzer {
 // new URL deprecated in java 20, the test is in java 17
 // https://stackoverflow.com/questions/31462/how-to-fetch-html-in-java
 // i need a LIFO (Last In First Out) structure to store the tags, so i will use a stack, thanks grokking algorithms
+// Error, returned "malformed HTML". Too confusing, I'll refactor
