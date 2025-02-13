@@ -1,14 +1,14 @@
-import java.io.IOException;
 import java.net.URL;
-import java.net.URLConnection;
-import java.util.Scanner;
 import java.util.Stack;
+import java.util.Scanner;
+import java.io.IOException;
+import java.net.URLConnection;
 
 public class HtmlAnalyzer {
     public static void main(String[] args) {
 
         if (args.length == 0) {
-            System.out.println("No arguments provided, use java HtmlAnalyzer <url>");
+             System.out.println("No args provided, use java HtmlAnalyzer <url>");
             return;
         }
 
@@ -17,9 +17,11 @@ public class HtmlAnalyzer {
         try {
             String content = connection(URL);
             String result = viewStructure(content);
+            
             if (result != null) {
                 System.out.println(result);
             }
+            
         } catch (Exception e) {
             e.getMessage();
         }
@@ -31,7 +33,7 @@ public class HtmlAnalyzer {
         URLConnection urlConnection = null;
 
         try {
-            urlConnection = new URL(URL).openConnection(); // deprecated in java 20
+            urlConnection = new URL(URL).openConnection();
             Scanner scanner = new Scanner(urlConnection.getInputStream());
             scanner.useDelimiter("\\Z");
             content = scanner.next();
@@ -51,27 +53,27 @@ public class HtmlAnalyzer {
         String[] htmlLines = content.split("\n");
 
         for (String line : htmlLines) {
-
-            if (line.trim().isEmpty()) {
+            line = line.trim();
+            if (line.isEmpty()) {
                 continue;
             }
 
-            if (isOpeningTag(line)) {
+            if (isOpening(line)) {
                 String contentLine = line.substring(1, line.length() - 1).trim();
                 String tag = contentLine.isEmpty() || contentLine.isBlank() || contentLine.contains(" ") ? null : contentLine;
                 
                 if (tag == null) {
-                    isMalformed = false;
+                    isMalformed = true;
                     break;
                 }
                 
                 tagStack.push(tag);
-            } else if (isClosingTag(line)) {
+            } else if (isClosing(line)) {
                 String contentLine = line.substring(2, line.length() - 1).trim();
-                String tag = contentLine.isEmpty()|| contentLine.contains(" ") ? null : contentLine;
+                String tag = contentLine.isEmpty() || contentLine.isBlank() || contentLine.contains(" ") ? null : contentLine;
 
-                if (tag == null || tagStack.isEmpty()) {
-                    isMalformed = false;
+                if (tag == null || tagStack.isEmpty() || !tagStack.peek().equals(tag)) {
+                    isMalformed = true;
                     break;
                 }
                 tagStack.pop();
@@ -96,12 +98,12 @@ public class HtmlAnalyzer {
         }
     }
 
-    private static boolean isOpeningTag(String line) {
-        return line.trim().startsWith("<") && line.trim().endsWith(">") && !line.startsWith("</");
+    private static boolean isOpening(String line) {
+        return line.startsWith("<") && line.trim().endsWith(">") && !line.startsWith("</");
     }
 
-    private static boolean isClosingTag(String line) {
-        return line.trim().startsWith("</") && line.trim().endsWith(">");
+    private static boolean isClosing(String line) {
+        return line.startsWith("</") && line.trim().endsWith(">");
     }
 }
 
@@ -113,3 +115,4 @@ public class HtmlAnalyzer {
 // i forgot to change the substring when i copied it from the opening...
 // A space. The problem was a space.
 // Else if and else are not correct, i need to check if the tag is malformed
+// A trim. The problem was a trim.
