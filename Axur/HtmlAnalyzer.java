@@ -1,43 +1,35 @@
-import java.net.URL;
-import java.util.Stack;
-import java.util.Scanner;
 import java.io.IOException;
+import java.net.URI;
 import java.net.URLConnection;
+import java.util.Scanner;
+import java.util.Stack;
 
 public class HtmlAnalyzer {
     public static void main(String[] args) {
 
         String URL = args[0];
 
-        try {
-            String content = connection(URL);
-            String result = viewStructure(content);
+        String content = connection(URL);
+        String result = viewStructure(content);
 
-            if (result != null) {
-                System.out.println(result);
-            }
-
-        } catch (Exception e) {
-            e.getMessage();
+        if (result != null) {
+            System.out.println(result);
         }
 
     }
 
-    public static String connection(String URL) {
-        String content = null;
-        URLConnection urlConnection = null;
-
+    public static String connection(String url) {
         try {
-            urlConnection = new URL(URL).openConnection();
-            Scanner scanner = new Scanner(urlConnection.getInputStream());
-            scanner.useDelimiter("\\Z");
-            content = scanner.next();
-            scanner.close();
+            URLConnection urlConnection = URI.create(url).toURL().openConnection();
+            try (Scanner scanner = new Scanner(urlConnection.getInputStream())) {
+                scanner.useDelimiter("\\Z");
+                return scanner.next();
+            }
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.println("URL connection error");
+            System.exit(1);
         }
-
-        return content;
+        return null;
     }
 
     public static String viewStructure(String content) {
@@ -101,6 +93,6 @@ public class HtmlAnalyzer {
 
     private static String getTag(String line, int index) {
         String contentLine = line.substring(index, line.length() - 1).trim();
-        return contentLine.isEmpty() || contentLine.isBlank() || contentLine.contains(" ") ? null : contentLine;
+        return contentLine.isBlank() || contentLine.contains(" ") ? null : contentLine;
     }
 }
