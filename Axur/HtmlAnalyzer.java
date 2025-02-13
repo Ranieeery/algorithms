@@ -6,17 +6,17 @@ import java.net.URLConnection;
 
 public class HtmlAnalyzer {
     public static void main(String[] args) {
-        
+
         String URL = args[0];
 
         try {
             String content = connection(URL);
             String result = viewStructure(content);
-            
+
             if (result != null) {
                 System.out.println(result);
             }
-            
+
         } catch (Exception e) {
             e.getMessage();
         }
@@ -55,12 +55,12 @@ public class HtmlAnalyzer {
 
             if (isOpening(line)) {
                 String tag = getTag(line, 1);
-                
+
                 if (tag == null) {
                     isMalformed = true;
                     break;
                 }
-                
+
                 tagStack.push(tag);
             } else if (isClosing(line)) {
                 String tag = getTag(line, 2);
@@ -104,13 +104,3 @@ public class HtmlAnalyzer {
         return contentLine.isEmpty() || contentLine.isBlank() || contentLine.contains(" ") ? null : contentLine;
     }
 }
-
-// https://www.geeksforgeeks.org/command-line-arguments-in-java/
-// new URL deprecated in java 20, the test is in java 17
-// https://stackoverflow.com/questions/31462/how-to-fetch-html-in-java
-// i need a LIFO (Last In First Out) structure to store the tags, so i will use a stack, thanks grokking algorithms
-// Error, returned "malformed HTML". Too confusing, i'll refactor
-// i forgot to change the substring when i copied it from the opening...
-// A space. The problem was a space.
-// Else if and else are not correct, i need to check if the tag is malformed
-// A trim. The problem was a trim.
