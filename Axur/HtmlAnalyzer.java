@@ -58,19 +58,20 @@ public class HtmlAnalyzer {
 
             if (isOpeningTag(line)) {
                 String contentLine = line.substring(1, line.length() - 1).trim();
-                String tag = contentLine.isEmpty() || contentLine.isBlank() || contentLine.contains("")? null : content;
-
+                String tag = contentLine.isEmpty() || contentLine.isBlank() || contentLine.contains(" ") ? null : contentLine;
+                
                 if (tag == null) {
-                    isMalformed = true;
+                    isMalformed = false;
                     break;
                 }
-
+                
                 tagStack.push(tag);
             } else if (isClosingTag(line)) {
                 String contentLine = line.substring(2, line.length() - 1).trim();
-                
-                if (contentLine == null || tagStack.isEmpty()) {
-                    isMalformed = true;
+                String tag = contentLine.isEmpty()|| contentLine.contains(" ") ? null : contentLine;
+
+                if (tag == null || tagStack.isEmpty()) {
+                    isMalformed = false;
                     break;
                 }
                 tagStack.pop();
@@ -104,10 +105,11 @@ public class HtmlAnalyzer {
     }
 }
 
-
 // https://www.geeksforgeeks.org/command-line-arguments-in-java/
 // new URL deprecated in java 20, the test is in java 17
 // https://stackoverflow.com/questions/31462/how-to-fetch-html-in-java
 // i need a LIFO (Last In First Out) structure to store the tags, so i will use a stack, thanks grokking algorithms
 // Error, returned "malformed HTML". Too confusing, i'll refactor
 // i forgot to change the substring when i copied it from the opening...
+// A space. The problem was a space.
+// Else if and else are not correct, i need to check if the tag is malformed
