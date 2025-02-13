@@ -15,6 +15,7 @@ public class HtmlAnalyzer {
 
         try {
             String content = connection(URL);
+            String result = viewStructure(content);
         } catch (Exception e) {
             e.getMessage();
         }
@@ -26,20 +27,35 @@ public class HtmlAnalyzer {
         URLConnection urlConnection = null;
 
         try {
-            urlConnection = new URL(URL).openConnection(); // deprecated i java 20
+            urlConnection = new URL(URL).openConnection(); // deprecated in java 20
             Scanner scanner = new Scanner(urlConnection.getInputStream());
             scanner.useDelimiter("\\Z");
             content = scanner.next();
             scanner.close();
-
-            System.out.println(content);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
         return content;
     }
+
+    public static String viewStructure(String content) {
+        String deepestLevel = null;
+        boolean isMalformed = false;
+        String[] htmlLines = content.split("\n");
+
+        for (String line : htmlLines) {
+            System.out.println(line);
+            System.out.println("---");
+
+            
+        }
+
+
+        return "";
+    }
 }
+
 
 // https://www.geeksforgeeks.org/command-line-arguments-in-java/
 // new URL deprecated in java 20, the test is in java 17
