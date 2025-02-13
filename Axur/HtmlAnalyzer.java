@@ -6,12 +6,7 @@ import java.net.URLConnection;
 
 public class HtmlAnalyzer {
     public static void main(String[] args) {
-
-        if (args.length == 0) {
-             System.out.println("No args provided, use java HtmlAnalyzer <url>");
-            return;
-        }
-
+        
         String URL = args[0];
 
         try {
@@ -59,8 +54,7 @@ public class HtmlAnalyzer {
             }
 
             if (isOpening(line)) {
-                String contentLine = line.substring(1, line.length() - 1).trim();
-                String tag = contentLine.isEmpty() || contentLine.isBlank() || contentLine.contains(" ") ? null : contentLine;
+                String tag = getTag(line, 1);
                 
                 if (tag == null) {
                     isMalformed = true;
@@ -69,8 +63,7 @@ public class HtmlAnalyzer {
                 
                 tagStack.push(tag);
             } else if (isClosing(line)) {
-                String contentLine = line.substring(2, line.length() - 1).trim();
-                String tag = contentLine.isEmpty() || contentLine.isBlank() || contentLine.contains(" ") ? null : contentLine;
+                String tag = getTag(line, 2);
 
                 if (tag == null || tagStack.isEmpty() || !tagStack.peek().equals(tag)) {
                     isMalformed = true;
@@ -104,6 +97,11 @@ public class HtmlAnalyzer {
 
     private static boolean isClosing(String line) {
         return line.startsWith("</") && line.trim().endsWith(">");
+    }
+
+    private static String getTag(String line, int index) {
+        String contentLine = line.substring(index, line.length() - 1).trim();
+        return contentLine.isEmpty() || contentLine.isBlank() || contentLine.contains(" ") ? null : contentLine;
     }
 }
 
