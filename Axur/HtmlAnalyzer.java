@@ -37,7 +37,7 @@ public class HtmlAnalyzer {
         String text = null;
         boolean isMalformed = false;
         Stack<String> tagStack = new Stack<>();
-        String[] htmlLines = content.split("\n");
+        String[] htmlLines = content.split("\r?\n");
 
         for (String line : htmlLines) {
             line = line.trim();

@@ -1,8 +1,8 @@
 EASTER_EGG_URLS
 
-# Teste técnico: Software Development Intern
+# Technical Test: Software Development Intern
 
-## Configurações do ambiente
+## Environment Setup
 
 - WSL: Ubuntu 24.04.1
 
@@ -15,17 +15,17 @@ EASTER_EGG_URLS
   OpenJDK 64-Bit Server VM Corretto-17.0.14.7.1 (build 17.0.14+7-LTS, mixed mode, sharing)
   ```
 
-## Conhecimentos adquiridos
+## Knowledge acquired
 
-- `new URL` está obsoleto a partir do Java 20, foi utilizado URI para acessar o conteúdo da página
+- `new URL` is deprecated in Java 20, URI was used to access the content of the page
 
-- `Stack` usa Generics, então é necessário especificar o tipo de dado que será armazenado
+- `Stack` uses Generics, so it's necessary to specify the type of data that will be stored
 
-- Consolidação do conhecimento sobre estruturas de dados, como pilhas
+- Consolidation of knowledge about data structures, such as stacks
 
-- O que `String[] args` realmente significa em Java
+- What  `String[] args` really means in Java
 
-Alguns comentários feitos durante o desenvolvimento do código (em inglês):
+Some notes made while developing the code:
 
 ```java
 // https://www.geeksforgeeks.org/command-line-arguments-in-java/
@@ -33,17 +33,18 @@ Alguns comentários feitos durante o desenvolvimento do código (em inglês):
 // https://stackoverflow.com/questions/31462/how-to-fetch-html-in-java
 // i need a LIFO (Last In First Out) structure to store the tags, so i will use a stack, thanks grokking algorithms
 // Error, returned "malformed HTML". Too confusing, i'll refactor
-// i forgot to change the substring when i copied it from the opening...
+// i forgot to change the substring when i copied it from the isOpening...
 // A space. The problem was a space.
 // Else if and else are not correct, i need to check if the tag is malformed
 // A trim. The problem was a trim.
 ```
 
-## Considerações
+## Considerations
 
-Apesar de ser um teste simples, foi interessante desenvolver o código uma vez que utilizar Java para algo do tipo foi novo para mim, onde normalmente usaria Python com Beautiful Soup ou Jsoup no próprio Java que conheci durante as pesquisas para resolução do teste.
+Although it's a simple test, it was interesting to develop the code since using Java for something like this was new to me, where normally I'd use Python with Beautiful Soup or Jsoup in Java itself, which I got to see while researching how to solve the test.
 
-Embora eu não tivesse raspado o conteúdo de uma página web com Java antes, após conseguir salvar em uma String achei bem semelhante aos desafios presentes no [Advent of Code](https://adventofcode.com/) que envolvem manipulação de strings e estruturas de dados, na qual participei no ano passado.
+Even though I hadn't scraped the content of a web page with Java before, once I managed to save it in a String I found it very similar to the challenges at [Advent of Code](https://adventofcode.com/) that involve manipulating strings and data structures, which I participated in last year.
 
-Minha primeira solução levou em conta o URL conforme encontrei no Stack Overflow, mas após pesquisar mais sobre o assunto, descobri que `new URL` está depreciado a partir do Java 20 então utilizei URI para acessar o conteúdo da página porém pode ser que seja possível com HttpClient também. A solução final foi bem simples, mas acredito que atendeu ao que foi pedido, consegui também encontrar o easter egg no `example6.html` e concluir o que estava marcado como opcional.
+My first solution took into account the URL as I found on Stack Overflow, but after researching more on the subject, I discovered that `new URL` is deprecated as of Java 20 so I used URI to access the content of the page but it may be possible with HttpClient as well. The final solution was quite simple, but I believe it covered what was requested, I also managed to find the easter egg in `example6.html` and complete what was marked as optional.
 
+I have also added an optional parameter to the regex in case it is CRLF instead of LF. There's also a private repository on GitHub with my commits and progress, which I can share if necessary.
