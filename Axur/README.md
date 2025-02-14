@@ -15,6 +15,20 @@ EASTER_EGG_URLS
   OpenJDK 64-Bit Server VM Corretto-17.0.14.7.1 (build 17.0.14+7-LTS, mixed mode, sharing)
   ```
 
+## Getting Started
+
+1. Compile the code
+
+  ```bash
+  javac HtmlAnalyzer.java
+  ```
+
+2. Run the code
+
+  ```bash
+  java HtmlAnalyzer http://hiring.axreng.com/internship/example1.html
+  ```
+
 ## Knowledge acquired
 
 - `new URL` is deprecated in Java 20, URI was used to access the content of the page
