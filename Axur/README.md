@@ -29,6 +29,22 @@ EASTER_EGG_URLS
   java HtmlAnalyzer http://hiring.axreng.com/internship/example1.html
   ```
 
+## Prepare for submission
+
+1. Compile to tar.gz
+
+  ```bash
+  tar -czvf raniery_meireles_goulart.tar.gz HtmlAnalyzer.java README.md
+  ```
+
+2. Verify files in tar.gz
+
+  ```bash
+  tar -tf raniery_meireles_goulart.tar.gz
+  ```
+
+3. Submit the file `raniery_meireles_goulart.tar.gz` following the instructions in the email
+
 ## Knowledge acquired
 
 - `new URL` is deprecated in Java 20, URI was used to access the content of the page
