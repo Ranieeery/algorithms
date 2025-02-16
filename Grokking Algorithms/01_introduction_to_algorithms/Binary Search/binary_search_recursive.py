@@ -15,7 +15,6 @@ def binary_search(list, item, min, max):
             return binary_search(list, item, min, max)
     else:
         return None
-    
 
 
 my_list = [15, 27, 39, 77, 92, 108, 121, 135, 200, 432, 12, 8, 1, 0]
