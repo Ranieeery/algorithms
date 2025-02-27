@@ -18,11 +18,8 @@ public class Quicksort {
             List<Integer> min = Arrays.stream(arr).boxed().skip(1).filter(x -> x <= pivot).collect(Collectors.toList());
             List<Integer> max = Arrays.stream(arr).boxed().skip(1).filter(x -> x > pivot).collect(Collectors.toList());
 
-            int[] sortedMin = min.stream().mapToInt(Integer::intValue).toArray();
-            int[] sortedMax = max.stream().mapToInt(Integer::intValue).toArray();
-
-            int[] resultMin = quicksort(sortedMin);
-            int[] resultMax = quicksort(sortedMax);
+            int[] resultMin = quicksort(min.stream().mapToInt(Integer::intValue).toArray());
+            int[] resultMax = quicksort(max.stream().mapToInt(Integer::intValue).toArray());
 
             int[] result = new int[resultMin.length + 1 + resultMax.length];
             System.arraycopy(resultMin, 0, result, 0, resultMin.length);
