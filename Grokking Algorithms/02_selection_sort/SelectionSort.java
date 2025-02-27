@@ -1,8 +1,10 @@
+import java.util.Arrays;
+
 public class SelectionSort {
     public static void main(String[] args) {
         int[] arr = new int[] { 5, 3, 6, 2, 10 };
 
-        System.out.println(selectionSort(arr));
+        System.out.println(Arrays.toString(selectionSort(arr)));
     }
 
     public static int findSmallest(int[] arr) {
